@@ -1,0 +1,510 @@
+@import './wbs-common';
+
+.wbs-pane {
+
+  header {
+    z-index: 6;
+  }
+
+  .tasks-pane, .timelines-pane {
+    max-height: calc(100vh - 48px);
+  }
+  .tasks-pane {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    .tasks-header, .tasks-container {
+      min-width: 640px;
+    }
+
+    .tasks-header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      z-index: 1;
+      > * {
+        padding: .25rem;
+        font-size: .7rem;
+        overflow: hidden;
+        background-color: $color-header;
+        border-bottom: 1px solid #888;
+        border-right: 1px solid #888;
+
+        &:nth-child(1) {
+          flex: 1;
+          padding: 0;
+          min-width: 216px;
+          > *:first-child {
+            padding: .25rem;
+          }
+        }
+        &:nth-child(2) {
+          width: 4rem;
+        }
+        &:nth-child(3) {
+          width: 3rem;
+        }
+        &:nth-child(4) {
+          width: 3rem;
+        }
+        &:nth-child(5) {
+          width: 3rem;
+        }
+        &:nth-child(6) {
+          width: 3rem;
+        }
+        &:nth-child(7) {
+          width: 3rem;
+        }
+        &:nth-child(8) {
+          width: 3rem;
+        }
+      }
+    }
+    .tasks-container {
+      font-size: .8rem;
+
+      ::v-deep ol {
+        list-style-type: none;
+        padding-left: 0;
+
+        &:not(.nestable-group) {
+          padding-left: $task-indent-size;
+        }
+        .nestable-item-content {
+          position: relative;
+          height: $task-height;
+        }
+
+        ol:not(.show) {
+          display: none;
+        }
+      }
+      .task-item-select {
+        transform: translate(2px, 4px);
+      }
+
+      .nestable-handle {
+        display: inline-block;
+        height: $task-height;
+
+        background: #f8f8f8;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+
+      .task-item {
+        position: absolute;
+        top: 0;
+        left: 40px;
+        display: flex;
+        width: calc(100% - 40px);
+        background: white;
+
+        &.project {
+          background: #B2DFDB;
+
+          &:not(.show-children) + ol {
+            display: none;
+          }
+
+          &.has-children {
+            .task-assign-rate {
+              display: none;
+            }
+          }
+        }
+
+        > * {
+          padding: .125rem .25rem;
+          text-align: center;
+          border-right: 1px solid #ddd;
+          border-bottom: 1px solid #eee;
+
+          > input {
+            width: 100%;
+            text-align: center;
+          }
+
+          &.task-info {
+            display: flex;
+            padding: 0;
+            flex: 1;
+            min-width: 160px;
+            > input {
+              padding: .125rem .25rem;
+              text-align: left;
+            }
+            .task-info-tool {
+              cursor: pointer;
+            }
+
+            &:not(:hover) {
+              .task-info-tool.hover-tool {
+                display: none;
+              }
+            }
+          }
+          &:nth-child(2) {
+            cursor: pointer;
+            width: 4rem;
+          }
+          &:nth-child(3) {
+            width: 3rem;
+          }
+          &:nth-child(4) {
+            width: 3rem;
+          }
+          &:nth-child(5) {
+            width: 3rem;
+          }
+          &:nth-child(6) {
+            width: 3rem;
+          }
+          &:nth-child(7) {
+            width: 3rem;
+          }
+          &:nth-child(8) {
+            width: 3rem;
+          }
+        }
+      }
+    }
+  }
+  .timelines-pane {
+    position: relative;
+    overflow: auto;
+    .timelines-header {
+      position: sticky;
+      top: 0;
+      display: flex;
+      background: $color-header;
+      z-index: 5;
+
+      @for $zoom from 1 through 5 {
+        &.z#{$zoom} {
+          width: #{ $time-line-max-term * $time-grid-x * $zoom };
+        }
+      }
+
+      .header-month {
+        position: relative;
+        height: 25.8px;
+        border-right: 1px solid #888;
+        border-bottom: 1px solid #888;
+
+        > div {
+          position: absolute;
+          top: 0;
+          left: 2px;
+          font-size: .6rem;
+        }
+      }
+      .header-monday {
+        position: absolute;
+        top: 11px;
+        font-size: .7rem;
+      }
+    }
+
+    .timelines-container {
+      position: relative;
+
+      .timeline-month {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background-color: #888;
+      }
+
+
+      @for $zoom from 1 through 5 {
+        &.z#{$zoom} {
+          width: #{ $time-line-max-term * $time-grid-x * $zoom };
+
+          .holiday {
+            position: absolute;
+            width: #{ $time-grid-x * $zoom };
+            height: 100%;
+            background-color: rgba($color-holiday, .75);
+          }
+        }
+      }
+
+      .today {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background-color: #263238;
+        opacity: .7;
+        z-index: 1;
+      }
+
+      .timeline-container {
+        position: relative;
+        display: block;
+        height: $line-height;
+        border-bottom: 1px solid white;
+
+        background-repeat: repeat-x;
+
+        @for $zoom from 1 through 5 {
+          &.z#{$zoom} {
+            background-size: #{$time-grid-x * $zoom * 7} $line-height;
+          }
+
+          @for $d from 1 through 7 {
+            &.d#{$d - 1}.z#{$zoom} {
+              @include background-date-grid($d, $zoom);
+            }
+          }
+        }
+
+
+        ::v-deep .timeline-item {
+          padding-top: 2px;
+
+          .handle {
+            border-color: #666;
+            border-radius: 50%;
+          }
+          .task-item {
+            padding: .1rem .25rem;
+            width: 100%;
+            height: $plan-height;
+            font-size: .7rem;
+            color: white;
+            background: #42A5F5;
+            border-radius: 4px;
+
+            &.project {
+              margin-top: 4px;
+              padding: 0 .25rem;
+              font-size: .6rem;
+              color: white;
+              background: rgba(#80CBC4, .8);
+              border-bottom: 1px solid #004D40;
+              height: $project-height;
+              border-radius: 1px;
+
+              &.complete {
+                background: rgba(#004D40, .8);
+              }
+              &.advance {
+                background: rgba(#4CAF50, .8);
+              }
+              &.delay {
+                background: rgba(#FF5722, .8);
+              }
+            }
+
+            @for $c from 0 through 10 {
+              &.assign-rate-#{$c} {
+                background-color: rgba(#42A5F5, ($c / 10 + 0.3));
+              }
+            }
+          }
+          .task-info {
+            display: flex;
+            position: absolute;
+            top: 1px;
+            left: calc(100% + 32px);
+            padding: 2px .2rem;
+            white-space: nowrap;
+            font-size: .7rem;
+            background: rgba(#E0F2F1, .9);
+            border-radius: 4px;
+
+            &.project {
+              background: rgba(#B2DFDB, .9);
+            }
+
+            > * + * {
+              padding-left: .5rem;
+            }
+            > .task-info-task-name {
+              padding-top: 2px;
+              font-size: .6rem;
+              font-weight: bold;
+            }
+            > .task-info-task-assignee {
+              padding-top: 1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.v-toolbar {
+  .connect-users {
+    margin-left: 2rem;
+    .client {
+      display: inline-block;
+      padding: .25rem;
+      width: 32px;
+
+      font-size: .5rem;
+      color: white;
+      background-color: #607D8B;
+      border-radius: 100vh;
+
+      white-space: nowrap;
+      overflow: hidden;
+
+      &::first-letter {
+        font-size: 1rem;
+      }
+    }
+    .client + .client {
+      margin-left: .25rem;
+    }
+  }
+  .toolbar {
+    &.timeline-zoom {
+      margin-right: 1rem;
+      padding-top: .75rem;
+      width: 5rem;
+
+      * {
+        font-size: .8rem;
+      }
+    }
+    &.management-begin-date {
+      margin-right: 1rem;
+      padding-top: 14px;
+      width: 5rem;
+
+      ::v-deep input[role=button] {
+        font-size: .8rem;
+      }
+    }
+  }
+  .toolbar-button {
+    cursor: pointer;
+    margin: 0 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: .6rem;
+    text-align: center;
+
+    color: #666;
+
+    &.disabled {
+      color: #aaa;
+    }
+
+    .tool-name {
+      padding-top: .2rem;
+      height: 24px;
+      line-height: .9;
+    }
+  }
+}
+
+.resource-pane {
+  ::v-deep table {
+    tbody {
+      tr {
+        td {
+          padding: .1rem;
+          font-size: .8rem;
+          height: 24px;
+        }
+      }
+    }
+  }
+}
+
+::v-deep {
+  .nestable {
+    position: relative;
+  }
+  .nestable .nestable-list {
+    margin: 0;
+    padding: 0 0 0 $task-indent-size;
+    list-style-type: none;
+  }
+  .nestable > .nestable-list {
+    padding: 0;
+  }
+  .nestable-item,
+  .nestable-item-copy {
+    margin: $task-margin-top 0 0;
+  }
+  .nestable-item:first-child,
+  .nestable-item-copy:first-child {
+    margin-top: 0;
+  }
+  .nestable-item .nestable-list,
+  .nestable-item-copy .nestable-list {
+    margin-top: $task-margin-top;
+  }
+  .nestable-item {
+    position: relative;
+  }
+  .nestable-item.is-dragging .nestable-list {
+    pointer-events: none;
+  }
+  .nestable-item.is-dragging * {
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .nestable-item.is-dragging:before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(106, 127, 233, 0.274);
+    border: 1px dashed rgb(73, 100, 241);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+  .nestable-drag-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .nestable-drag-layer > .nestable-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    background-color: rgba(106, 127, 233, 0.274);
+  }
+  .nestable [draggable="true"] {
+    cursor: move;
+  }
+  .nestable-handle {
+    display: inline;
+  }
+}
+
+.task-assignee-select-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 480px;
+  opacity: 0;
+  z-index: 100;
+
+  padding: .5rem .5rem 0;
+
+  font-size: .8rem;
+
+  transition: opacity .25s ease;
+  &.show {
+    opacity: 1;
+  }
+
+  .buttons-container {
+    padding-right: .5rem;
+  }
+}
+

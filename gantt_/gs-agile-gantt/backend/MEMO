@@ -1,0 +1,10 @@
+export NODE_OPTIONS=--openssl-legacy-provider
+yarn
+node app.js
+
+router/auth.js   password check skip
+/*  GUSA
+    if(!user || !bcrypt.compareSync(password, user.password)) {
+        return res.status(400).json({"error": "invalid"})
+    }
+*/

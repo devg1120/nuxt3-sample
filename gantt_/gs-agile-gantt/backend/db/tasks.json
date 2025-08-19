@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "task - 1",
+    "assigneeId": 0,
+    "estimate": 6,
+    "plan": 28,
+    "planManHour": 126,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "hasDetail": false
+  },
+  {
+    "id": 2,
+    "name": "管理",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  },
+  {
+    "id": 3,
+    "name": "要件定義",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  },
+  {
+    "id": 4,
+    "name": "設計",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  },
+  {
+    "id": 5,
+    "name": "開発",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  },
+  {
+    "id": 6,
+    "name": "試験項目作成",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  },
+  {
+    "id": 7,
+    "name": "試験実施",
+    "assigneeId": 0,
+    "estimate": 1,
+    "plan": 28,
+    "planManHour": 21,
+    "assignRate": 1,
+    "progress": 0,
+    "beginDate": 20250305,
+    "parentId": 1,
+    "hasDetail": false
+  }
+]

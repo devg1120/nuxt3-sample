@@ -1,0 +1,81 @@
+{
+  "name": "jordium-gantt-vue3",
+  "version": "1.2.1",
+  "type": "module",
+  "main": "dist/jordium-gantt-vue3.cjs.js",
+  "module": "dist/jordium-gantt-vue3.es.js",
+  "types": "dist/jordium-gantt-vue3.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nelson820125/jordium-gantt-vue3"
+  },
+  "homepage": "https://nelson820125.github.io/jordium-gantt-vue3/",
+  "keywords": [
+    "gantt",
+    "vue",
+    "vue3",
+    "vue-component",
+    "vue-library",
+    "typescript",
+    "es6",
+    "javascript",
+    "vite",
+    "gantt-chart",
+    "task-scheduling",
+    "project-management",
+    "timeline",
+    "drag-and-drop",
+    "vue3-component",
+    "vue3-gantt",
+    "vue3-gantt-chart",
+    "vue3-project-management",
+    "vue3-timeline",
+    "vue3-task-scheduling",
+    "vue3-drag-and-drop",
+    "vue3-gantt-chart-component",
+    "vue3-gantt-chart-library",
+    "vue3-gantt-chart-plugin",
+    "vue3-gantt-chart-tool",
+    "vue3-gantt-chart-ui",
+    "project-management-tool"
+  ],
+  "description": "A Vue 3 Gantt chart component for project management, task scheduling, and timeline visualization. Built with TypeScript and Vite.",
+  "author": "Jordium.com (Email: lining820125@163.com/nelson820125@gmail.com/ning.li@jordium.com)",
+  "scripts": {
+    "dev": "vite --host --port 3000",
+    "dev:demo": "vite",
+    "build": "vue-tsc -b && vite build",
+    "build:demo": "vue-tsc -b && vite build",
+    "build:lib": "vite build --config vite.config.lib.ts",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "lint:check": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "vue-tsc --noEmit -p tsconfig.json --composite false"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.25.0",
+    "prettier": "^3.2.5",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vue-tsc": "^2.2.8"
+  }
+}
