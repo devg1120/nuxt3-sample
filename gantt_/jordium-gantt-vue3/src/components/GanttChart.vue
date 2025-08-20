@@ -114,6 +114,7 @@ const currentTimeScale = ref<TimelineScale>(TimelineScale.DAY)
 // 额外边距: 13px (task-list-header的左边距3px + 其他10px预留)
 const TASK_LIST_MAX_WIDTH = 1120 + 7 + 20 + 13 // = 1160px
 const TASK_LIST_MIN_WIDTH = 320 // TaskList最小宽度
+const TASK_LIST_CURRENT_WIDTH = 600  // GUSA
 
 const taskListBodyWidth = ref(TASK_LIST_MAX_WIDTH) // TaskList默认宽度
 const ganttPanelLeftMinWidth = ref(TASK_LIST_MIN_WIDTH) // 左侧面板最小宽度
@@ -1604,6 +1605,7 @@ function handleTaskDelete(task: Task, deleteChildren?: boolean) {
 
 .gantt-panel-left {
   /* width 由js控制 */
+  /* min-width: 320px; */
   min-width: 320px;
   transition: width 0.1s;
 }

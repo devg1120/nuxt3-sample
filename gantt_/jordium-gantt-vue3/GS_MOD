@@ -58,3 +58,13 @@ const taskBarStyle = computed(() => {
     top: '2px',
   }
 
+*** left panel mini width  size
+
+# GanttChart
+#
+.gantt-panel-left {
+  /* width 由js控制 */
+  /* min-width: 320px; */
+  min-width: 320px;
+  transition: width 0.1s;
+}

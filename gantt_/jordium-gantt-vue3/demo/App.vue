@@ -515,6 +515,8 @@ function handleMilestoneDragEnd(newMilestone) {
 onMounted(() => {
   tasks.value = demoData.tasks as Task[]
   milestones.value = demoData.milestones as Task[]
+  console.dir(tasks.value);
+  console.dir(milestones.value);
 })
 
 // 递归查找任务/里程碑，因为原始结构一致
