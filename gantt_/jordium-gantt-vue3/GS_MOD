@@ -1,0 +1,60 @@
+
+**********************************************************
+** task name level indent   {20 => 40}
+
+# src/components/TaskRow.vue
+#L32
+const indent = `${baseIndent + props.level * 20}px`
+const indent = `${baseIndent + props.level * 40}px`
+
+
+**********************************************************
+*** task row height  resize   {50 => 30}
+
+# TaskRow.vue 
+# 50 => 30
+.task-row {
+  display: flex;
+  border-bottom: 1px solid var(--gantt-border-light);
+  //height: 50px;
+  height: 30px;
+
+# Timeline.vue 
+# 51 => 31
+const contentHeight = computed(() => {
+  // 每个任务行高度51px (50px + 1px border)
+  const rowHeight = 51
+
+        <div class="task-bar-container" :style="{ height: `${contentHeight}px` }">
+          <div class="task-rows" :style="{ height: `${contentHeight}px` }">
+            <div
+              v-for="(task, index) in tasks"
+              :key="task.id"
+              class="task-row"
+              :class="{ 'task-row-hovered': hoveredTaskId === task.id }"
+              //:style="{ top: `${index * 51}px` }"
+              :style="{ top: `${index * 31}px` }"
+
+.task-row {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  //height: 51px; 
+  height: 31px; 
+  pointer-events: auto;
+  z-index: 11;
+  transition: background-color 0.2s ease;
+}
+
+# taskBar
+const taskBarStyle = computed(() => {
+
+  return {
+    left: `${left}px`,
+    width: `${width}px`,
+    //height: `${props.rowHeight - 10}px`,
+    //top: '4px',
+    height: `${props.rowHeight - 22}px`,
+    top: '2px',
+  }
+

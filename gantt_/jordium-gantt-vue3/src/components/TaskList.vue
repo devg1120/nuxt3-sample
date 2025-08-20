@@ -292,7 +292,6 @@ const handleTaskListScroll = (event: Event) => {
   if (!target) return
 
   const scrollTop = target.scrollTop
-
   // 同步垂直滚动到Timeline
   window.dispatchEvent(
     new CustomEvent('task-list-vertical-scroll', {
@@ -300,14 +299,24 @@ const handleTaskListScroll = (event: Event) => {
     }),
   )
 }
-
+/*  GUSA
 // 处理Timeline垂直滚动同步
 const handleTimelineVerticalScroll = (event: CustomEvent) => {
+   console.log("-------------");
   const { scrollTop } = event.detail
-  const taskListBodyElement = document.querySelector('.task-list-body') as HTMLElement
+  //const taskListBodyElement = document.querySelector('.task-list-body') as HTMLElement
+  const taskListBodyElement = document.querySelector('.task-list') as HTMLElement
   if (taskListBodyElement && taskListBodyElement.scrollTop !== scrollTop) {
     // 避免循环触发，只在scrollTop不同时才设置
     taskListBodyElement.scrollTop = scrollTop
+  }
+}
+*/
+const handleTimelineVerticalScroll = (event: CustomEvent) => {
+  const { scrollTop } = event.detail
+  const taskListElement = document.querySelector('.task-list') as HTMLElement
+  if (taskListElement && taskListElement.scrollTop !== scrollTop) {
+    taskListElement.scrollTop = scrollTop
   }
 }
 
@@ -380,7 +389,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="task-list">
+  <div class="task-list" @scroll="handleTaskListScroll">
     <div class="task-list-header">
       <div class="col col-name">{{ t.taskName }}</div>
       <div class="col col-pre">{{ t.predecessor }}</div>
@@ -391,7 +400,7 @@ onUnmounted(() => {
       <div class="col col-hours">{{ t.actualHours }}</div>
       <div class="col col-progress">{{ t.progress }}</div>
     </div>
-    <div class="task-list-body" @scroll="handleTaskListScroll">
+    <div class="task-list-body" @scroll="handleTaskListScroll_org">
       <TaskRow
         v-for="task in localTasks"
         :key="task.id"
@@ -475,6 +484,10 @@ onUnmounted(() => {
   flex: 2 0 300px;
   min-width: 300px;
   justify-content: flex-start;
+
+  flex-shrink: 0; /* 防止header被压缩 */
+  position: sticky; /* 使header固定 */
+  left: 0;
 }
 
 .col-pre {
@@ -506,8 +519,15 @@ onUnmounted(() => {
   width: max-content;
   background: var(--gantt-bg-primary);
   flex: 1;
-  overflow-x: hidden; /* 让body部分可以滚动 */
-  overflow-y: auto; /* 允许垂直滚动 */
+
+  /*  GUSA comment out*/
+  /*
+  overflow-x: hidden; 
+  overflow-y: auto; 
+  */
+  
+
+
 
   /* Webkit浏览器滚动条样式 */
   scrollbar-width: thin;

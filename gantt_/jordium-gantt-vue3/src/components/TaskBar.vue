@@ -176,8 +176,10 @@ const taskBarStyle = computed(() => {
   return {
     left: `${left}px`,
     width: `${width}px`,
-    height: `${props.rowHeight - 10}px`,
-    top: '4px',
+    //height: `${props.rowHeight - 10}px`,
+    //top: '4px',
+    height: `${props.rowHeight - 22}px`,
+    top: '2px',
   }
 })
 

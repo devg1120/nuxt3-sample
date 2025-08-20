@@ -30,7 +30,8 @@ const overdueText = computed(() => t.value?.overdue ?? '')
 const daysText = computed(() => t.value?.days ?? '')
 
 const baseIndent = 10
-const indent = `${baseIndent + props.level * 20}px`
+//const indent = `${baseIndent + props.level * 20}px`
+const indent = `${baseIndent + props.level * 40}px`
 function handleToggle() {
   emit('toggle', props.task)
 }
@@ -433,7 +434,7 @@ onUnmounted(() => {
 .task-row {
   display: flex;
   border-bottom: 1px solid var(--gantt-border-light);
-  height: 50px;
+  height: 30px;
   background: var(--gantt-bg-primary);
   align-items: center;
   color: var(--gantt-text-secondary);
@@ -443,6 +444,7 @@ onUnmounted(() => {
   transform-origin: 5px center; /* 从左侧偏右5px的位置作为放大中心 */
   z-index: 1;
   position: relative;
+  overflow-x: clip;
 }
 
 .task-row:hover {
@@ -451,6 +453,7 @@ onUnmounted(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 10;
 }
+
 
 .task-row-hovered {
   background-color: var(--gantt-bg-hover) !important;
@@ -588,16 +591,24 @@ onUnmounted(() => {
   border-right: 1px solid var(--gantt-border-light);
   box-sizing: border-box;
   overflow: hidden;
+ 
 }
 
 .col:last-child {
   border-right: none;
 }
 
+
 .col-name {
-  flex: 2 0 300px;
+  flex: 1 0 300px;
   min-width: 300px;
   justify-content: flex-start;
+
+  /*flex-shrink: 0  ;*/
+  position: sticky ;
+  left: 0 ;
+  z-index: 100;
+  background-color: white;
 }
 
 .col-pre {

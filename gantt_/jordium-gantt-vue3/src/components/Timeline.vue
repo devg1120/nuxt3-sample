@@ -379,7 +379,7 @@ const handleTaskRowHover = (taskId: number | null) => {
 // 计算Timeline内容的总高度
 const contentHeight = computed(() => {
   // 每个任务行高度51px (50px + 1px border)
-  const rowHeight = 51
+  const rowHeight = 31
   const taskCount = tasks.value.length
   const minHeightFromTasks = taskCount * rowHeight
   const minHeight = 400 // 最小高度确保有足够的空间
@@ -1600,7 +1600,10 @@ const handleAddSuccessor = (task: Task) => {
   emit('add-successor', task)
 }
 </script>
-
+<!--
+    @scroll="handleTimelineScroll"
+    @scroll="handleTimelineBodyScroll"
+-->
 <template>
   <div
     ref="timelineContainer"
@@ -1818,7 +1821,7 @@ const handleAddSuccessor = (task: Task) => {
               :key="task.id"
               class="task-row"
               :class="{ 'task-row-hovered': hoveredTaskId === task.id }"
-              :style="{ top: `${index * 51}px` }"
+              :style="{ top: `${index * 31}px` }"
               @mouseenter="handleTaskRowHover(task.id)"
               @mouseleave="handleTaskRowHover(null)"
             >
@@ -2227,7 +2230,7 @@ const handleAddSuccessor = (task: Task) => {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 51px; /** 为了对齐左侧的Task List Row高度，同时需要包含List Row的Bottom Border 1px */
+  height: 31px; /** 为了对齐左侧的Task List Row高度，同时需要包含List Row的Bottom Border 1px */
   pointer-events: auto;
   z-index: 11;
   transition: background-color 0.2s ease;
