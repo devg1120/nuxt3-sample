@@ -1911,7 +1911,9 @@ const handleAddSuccessor = (task: Task) => {
     />
   </div>
 </template>
-
+<!--
+  auto => hidden
+-->
 <style scoped>
 @import '../styles/theme-variables.css';
 .timeline {
@@ -2162,7 +2164,8 @@ const handleAddSuccessor = (task: Task) => {
 
 .timeline-body {
   flex: 1;
-  overflow: auto;
+  /*overflow: auto;*/  /*GUSA*/
+  overflow: hidden;
   position: relative;
   width: fit-content;
   background: var(--gantt-bg-primary, #ffffff);
