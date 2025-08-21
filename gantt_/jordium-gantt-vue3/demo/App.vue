@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+console.warn = () => {};
+
 import { ref, onMounted, nextTick } from 'vue'
 import GanttChart from '../src/components/GanttChart.vue'
 // import TaskDrawer from '../src/components/TaskDrawer.vue' // 移除
@@ -512,11 +515,114 @@ function handleMilestoneDragEnd(newMilestone) {
   )
 }
 
+
+// DUMP TASK ---------------------------------------------
+
+function dump_task_walk( level, task ) {
+  console.log("   ".repeat(level) + task.name + " [" + task.id +"]" + "    " + task.startDate + " => " + task.endDate);
+  level = level + 1;
+  if (task.children)  {
+  for (let i = 0; i < task.children.length; i++) {
+          dump_task_walk(level,task.children[i]);
+  }
+  }
+}
+
+function dump_task_array_walk( task_array ) {
+  console.log("--- dump tasks start ---")
+  for (let i = 0; i < task_array.length; i++) {
+    dump_task_walk(0, task_array[i]);
+  }
+  console.log("------------------------")
+
+}
+
+// DATE SHIFT TASK ---------------------------------------------
+
+function zeroPadding(NUM, LEN){
+  return ( Array(LEN).join('0') + NUM ).slice( -LEN );
+}
+
+function date2str(date) {
+  const yyyy = String(date.getFullYear()); 
+  const mm   = zeroPadding(date.getMonth()+ 1, 2); 
+  const dd   = zeroPadding(date.getDate(), 2); 
+  const str  = yyyy +"-"+ mm +"-"+ dd;
+	   //   console.log("==> " +str);
+  return str
+}
+
+function gettoday() {
+  const date = new Date();
+  const yyyy = String(date.getFullYear()); 
+  const mm   = zeroPadding(date.getMonth()+ 1, 2); 
+  const dd   = zeroPadding(date.getDate(), 2); 
+  const str  = yyyy +"-"+ mm +"-"+ dd;
+  const today = new Date(str);
+  return today;
+}
+
+function date_shift_task_walk( level, task , shift_day) {
+  //console.log("   ".repeat(level) + task.name + " [" + task.id +"]");
+
+  let startDate =  new Date(task.startDate) 
+  let endDate   =  new Date(task.endDate);
+
+  startDate.setDate(startDate.getDate() + shift_day);
+  endDate.setDate(endDate.getDate() + shift_day);
+
+  task.startDate = date2str(startDate);
+  task.endDate = date2str(endDate);
+
+  level = level + 1;
+  if (task.children)  {
+    for (let i = 0; i < task.children.length; i++) {
+          date_shift_task_walk(level,task.children[i], shift_day);
+    }
+  }
+}
+
+function date_shift_task_array_walk( task_array ) {
+  //console.log("--- date shift tasks start ---")
+  //console.log(tasks.value[0].startDate);
+  const startday_str = tasks.value[0].startDate;
+
+  const startday = new Date(startday_str);
+  const today = gettoday();
+
+  //const startday = new Date("2025-07-31");
+  //const today = new Date("2025-08-02");
+
+  date2str(today)
+  date2str(startday)
+  var shift_day = (today - startday) / 86400000;
+  //console.log(shift_day);
+
+  for (let i = 0; i < task_array.length; i++) {
+    date_shift_task_walk(0, task_array[i], shift_day);
+  }
+  //console.log("------------------------")
+
+}
 onMounted(() => {
   tasks.value = demoData.tasks as Task[]
   milestones.value = demoData.milestones as Task[]
-  console.dir(tasks.value);
-  console.dir(milestones.value);
+  //console.dir(tasks.value);
+  //console.dir(milestones.value);
+  //console.log("---");
+  //console.dir(tasks.value);
+  //console.log(tasks.value[0].id);
+  //console.log(tasks.value[0].name);
+  //console.log(tasks.value[0].startDate);
+  //console.log(tasks.value[0].endDate);
+  //console.dir(tasks.value[0].children[0].id);
+  //console.dir(tasks.value[0].children[0].name);
+
+  //tasks.value[0].children[0].endDate = "2025-06-21";
+  //dump_task_array_walk(tasks.value);
+
+  date_shift_task_array_walk(tasks.value);
+  dump_task_array_walk(tasks.value);
 })
 
 // 递归查找任务/里程碑，因为原始结构一致

@@ -2164,8 +2164,8 @@ const handleAddSuccessor = (task: Task) => {
 
 .timeline-body {
   flex: 1;
-  /*overflow: auto;*/  /*GUSA*/
-  overflow: hidden;
+  overflow-y: auto;  /*GUSA*/
+  overflow-x: hidden;  /*GUSA*/
   position: relative;
   width: fit-content;
   background: var(--gantt-bg-primary, #ffffff);
